@@ -28,7 +28,6 @@ class BPETokenizer:
             # Sort special tokens by length (longest first) to handle overlapping tokens correctly
             sorted_special_tokens = sorted(self.special_tokens, key=len, reverse=True)
             special_tokens_dict = {token: 50256 + i for i, token in enumerate(sorted_special_tokens)}
-            print(f"Special tokens mapping: {special_tokens_dict}")
             self.tokenizer = tiktoken.Encoding(
                 name="gpt2_with_special",
                 pat_str=tiktoken.get_encoding("gpt2")._pat_str,
@@ -39,7 +38,8 @@ class BPETokenizer:
             self.tokenizer = tiktoken.get_encoding("gpt2")
         
         # Store the vocabulary and merges for reference
-        self.vocab = vocab
+        self.vocab = {i: self.tokenizer.decode_single_token_bytes(i) for i in range(self.tokenizer.n_vocab)}
+        self.merges = list(self.tokenizer._mergeable_ranks.items())
 
     def encode(self, text: str) -> List[int]:
         """
