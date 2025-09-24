@@ -117,6 +117,18 @@ uv run pytest
 == 23 passed, 1 xfailed in 4.60s ==
 ```
 
+### 🔍 CUDA Visibility Test
+
+On the remote machine, verify GPU access using your assigned device ID (provided by course staff):
+
+```sh
+CUDA_VISIBLE_DEVICES=YourDeviceID uv run cuda_visible_test.py 
+```
+
+Replace `YourDeviceID` with your assigned CUDA device ID from course staff.
+
+**Goal:** Confirm GPU availability and proper device assignment.
+
 ### 🧠 Complete Workflow
 
 ```sh
@@ -124,6 +136,7 @@ uv run pytest -q
 make submission
 scp zipfile
 ssh to remote
+check GPU visibility
 ```
 
 Upload `cse599o-fall2025-assignment-0-submission.zip` to "Assignment 0: Warmup" on Gradescope. This assignment does not count toward your grade and only ensures the workflow works for everyone’s account.
