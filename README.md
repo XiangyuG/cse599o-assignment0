@@ -117,7 +117,7 @@ uv run pytest
 == 23 passed, 1 xfailed in 4.60s ==
 ```
 
-### 🔍 CUDA Visibility Test
+### 🔍 5. CUDA Visibility Test
 
 On the remote machine, verify GPU access using your assigned device ID (provided by course staff):
 
