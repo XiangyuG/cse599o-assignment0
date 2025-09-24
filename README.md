@@ -6,7 +6,7 @@ This warmup assignment introduces the course workflow using a tokenization imple
 
 1. **Test** - Run the provided test suite (adapted from [Stanford CS336](https://github.com/stanford-cs336/assignment1-basics))
 2. **Package** - Follow the submission workflow to create a deliverable archive for Gradescope
-3. **Containerize** - Build a Docker image that can execute on remote machines
+3. **Transfer** -  Transfer and Run on Remote Machine
 
 This assignment introduces you to the course’s development environment, testing framework, and deployment pipeline.
 
@@ -84,48 +84,33 @@ This command:
 
 **Goal:** `cse599o-fall2025-assignment-0-submission.zip` should appear in the repo root.
 
-### 🐳 4. Build Docker Image
+### 🌐 4. Transfer & Run on Remote Machine
 
-Build a container image containing your solution:
+We have two machines available for this course: "tomago.cs.washington.edu" and "tempura.cs.washington.edu". You can login to either using your UW NetID.
 
-This typically runs:
-```sh
-docker build -t hw0-image .
-```
-
-- `-t hw0-image` tags the image for easy reference
-- The Dockerfile installs dependencies and copies your code
-
-**Goal:** A Docker image named `hw0-image` should appear in `docker images`.
-
-### 🗜 5. Export Image
-
-Export the image as a portable tarball:
-
-This usually runs:
-```sh
-docker save hw0-image -o hw0-image.tar
-```
-
-**Goal:** You now have a portable `hw0-image.tar` file.
-
-### 🌐 6. Transfer & Run on Remote Machine
-
-Copy the tarball to a remote machine:
+First, test SSH access to one of the course machines:
 
 ```sh
-scp hw0-image.tar user@remote:/tmp/
+ssh UWNetID@tomago.cs.washington.edu
+# or
+ssh UWNetID@tempura.cs.washington.edu
 ```
 
-Then on the remote machine:
+Transfer your submission archive from your local machine to the remote server:
 
 ```sh
-docker load -i /tmp/hw0-image.tar
-docker run --rm hw0-image
+scp ./cse599o-fall2025-assignment-0-submission.zip UWNetID@tomago.cs.washington.edu:/homes/iws/UWNetID
+# or
+scp ./cse599o-fall2025-assignment-0-submission.zip UWNetID@tempura.cs.washington.edu:/homes/iws/UWNetID
 ```
 
-- `docker load` imports the image into the remote Docker store
-- `docker run` starts a container and executes your program/tests
+On the remote machine, extract and test your submission:
+
+```sh
+unzip ./cse599o-fall2025-assignment-0-submission.zip -d assignment0
+cd assignment0
+uv run pytest
+```
 
 **Goal:** We expect to see output similar to:
 ```
@@ -137,10 +122,8 @@ docker run --rm hw0-image
 ```sh
 uv run pytest -q
 make submission
-make docker-image
-make zip-image
-scp hw0-image.tar user@remote:/tmp/
-ssh user@remote "docker load -i /tmp/hw0-image.tar && docker run --rm hw0-image"
+scp zipfile
+ssh to remote
 ```
 
 Upload `cse599o-fall2025-assignment-0-submission.zip` to "Assignment 0: Warmup" on Gradescope. This assignment does not count toward your grade and only ensures the workflow works for everyone’s account.

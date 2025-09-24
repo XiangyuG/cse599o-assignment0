@@ -18,9 +18,7 @@ zip -r "$output_file" . \
     -x '*__pycache__*' \
     -x '*.pkl' \
     -x '*.pickle' \
-    -x '*.txt' \
     -x '*.log' \
-    -x '*.json' \
     -x '*.out' \
     -x '*.err' \
     -x '.git*' \
